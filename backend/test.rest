@@ -1,0 +1,303 @@
+### DevLinker API Testing
+### Make sure the backend server is running on http://localhost:5000
+
+### Variables
+@baseUrl = http://localhost:5000/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzBkMGEyMzg5NzQ0OTFmYTNhY2NlNyIsImlhdCI6MTc1MjIyMzkwNywiZXhwIjoxNzUyODI4NzA3fQ.Mvfn61XAxeGoS7RUWby7-QvUPsatToiUN35S8v33S-Y
+@userId = user-id-here
+@username = johndoe
+
+### Health Check
+GET {{baseUrl}}/../health
+
+###
+
+### 1. AUTHENTICATION ENDPOINTS
+
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser2",
+  "email": "test@example2.com",
+  "password": "password123",
+  "fullName": "Test User2"
+}
+
+###
+
+### Login user
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+
+### Register another user for testing
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "email": "john@example.com",
+  "password": "password123",
+  "fullName": "John Doe"
+}
+
+###
+
+### 2. USER ENDPOINTS
+
+### Get current user profile (requires authentication)
+GET {{baseUrl}}/user/profile
+Authorization: Bearer {{token}}
+
+###
+
+### Update user profile (requires authentication)
+PUT {{baseUrl}}/user/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fullName": "Test User Updated",
+  "bio": "I'm a full-stack developer passionate about creating amazing web applications.",
+  "location": "San Francisco, CA",
+  "website": "https://testuser.dev",
+  "github": "testuser",
+  "linkedin": "testuser",
+  "twitter": "testuser",
+  "skills": ["JavaScript", "React", "Node.js", "MongoDB", "Python"]
+}
+
+###
+
+### Get user by username (public endpoint)
+GET {{baseUrl}}/user/{{username}}
+
+###
+
+### 3. PROJECT ENDPOINTS
+
+### Get current user's projects (requires authentication)
+GET {{baseUrl}}/project
+Authorization: Bearer {{token}}
+
+###
+
+### Create a new project (requires authentication)
+POST {{baseUrl}}/project
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "DevLinker Platform",
+  "description": "A full-stack web application for developers to showcase their projects and share knowledge through blogs.",
+  "technologies": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+  "githubUrl": "https://github.com/testuser/devlinker",
+  "liveUrl": "https://devlinker.example.com",
+  "imageUrl": "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800"
+}
+
+###
+
+### Create another project
+POST {{baseUrl}}/project
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "E-Commerce Dashboard",
+  "description": "A modern admin dashboard for managing e-commerce operations with real-time analytics and inventory management.",
+  "technologies": ["Vue.js", "Laravel", "MySQL", "Chart.js"],
+  "githubUrl": "https://github.com/testuser/ecommerce-dashboard",
+  "liveUrl": "https://dashboard.example.com",
+  "imageUrl": "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800"
+}
+
+###
+
+### Update a project (replace PROJECT_ID with actual ID)
+PUT {{baseUrl}}/project/6870d3ca86bd95faa222fe6b
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "DevLinker Platform - Updated",
+  "description": "An updated full-stack web application for developers to showcase their projects and share knowledge through blogs.",
+  "technologies": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Docker"],
+  "githubUrl": "https://github.com/testuser/devlinker",
+  "liveUrl": "https://devlinker.example.com",
+  "imageUrl": "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800"
+}
+
+###
+
+### Get projects by username (public endpoint)
+GET {{baseUrl}}/project/user/{{username}}
+
+###
+
+### Delete a project (replace PROJECT_ID with actual ID)
+DELETE {{baseUrl}}/project/6870d3ca86bd95faa222fe6b
+Authorization: Bearer {{token}}
+
+###
+
+### 4. BLOG ENDPOINTS
+
+### Get current user's blogs (requires authentication)
+GET {{baseUrl}}/blog
+Authorization: Bearer {{token}}
+
+###
+
+### Create a new blog post (requires authentication)
+POST {{baseUrl}}/blog
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Getting Started with React Hooks",
+  "content": "React Hooks have revolutionized the way we write React components. In this comprehensive guide, we'll explore the most commonly used hooks and how they can simplify your React development workflow.\n\n## useState Hook\n\nThe useState hook allows you to add state to functional components...",
+  "excerpt": "Learn how to use React Hooks to build more efficient and cleaner React components.",
+  "tags": ["React", "JavaScript", "Frontend", "Hooks"],
+  "imageUrl": "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=800"
+}
+
+###
+
+### Create another blog post
+POST {{baseUrl}}/blog
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Building RESTful APIs with Node.js and Express",
+  "content": "Creating robust and scalable APIs is crucial for modern web applications. In this tutorial, we'll build a complete RESTful API using Node.js and Express.\n\n## Setting Up Express\n\nFirst, let's set up our Express server...",
+  "excerpt": "A complete guide to building RESTful APIs with Node.js, Express, and MongoDB.",
+  "tags": ["Node.js", "Express", "API", "Backend", "MongoDB"],
+  "imageUrl": "https://images.pexels.com/photos/11035540/pexels-photo-11035540.jpeg?auto=compress&cs=tinysrgb&w=800"
+}
+
+###
+
+### Update a blog post (replace BLOG_ID with actual ID)
+PUT {{baseUrl}}/blog/6870d44986bd95faa222fe87
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Getting Started with React Hooks - Updated",
+  "content": "React Hooks have revolutionized the way we write React components. In this comprehensive and updated guide, we'll explore the most commonly used hooks and advanced patterns.\n\n## useState Hook\n\nThe useState hook allows you to add state to functional components...\n\n## useEffect Hook\n\nThe useEffect hook lets you perform side effects in functional components...",
+  "excerpt": "Learn how to use React Hooks to build more efficient and cleaner React components with advanced patterns.",
+  "tags": ["React", "JavaScript", "Frontend", "Hooks", "Advanced"],
+  "imageUrl": "https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=800"
+}
+
+###
+
+### Get blogs by username (public endpoint)
+GET {{baseUrl}}/blog/user/{{username}}
+
+###
+
+### Delete a blog post (replace BLOG_ID with actual ID)
+DELETE {{baseUrl}}/blog/6870d44986bd95faa222fe87
+Authorization: Bearer {{token}}
+
+###
+
+### 5. ADMIN ENDPOINTS
+
+### Get all users (admin only - requires admin role)
+GET {{baseUrl}}/admin/users
+Authorization: Bearer {{token}}
+
+###
+
+### 6. ERROR TESTING
+
+### Test invalid login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "invalid@example.com",
+  "password": "wrongpassword"
+}
+
+###
+
+### Test accessing protected route without token
+GET {{baseUrl}}/user/profile
+
+###
+
+### Test accessing protected route with invalid token
+GET {{baseUrl}}/user/profile
+Authorization: Bearer invalid-token
+
+###
+
+### Test creating user with existing email
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser2",
+  "email": "test@example.com",
+  "password": "password123",
+  "fullName": "Test User 2"
+}
+
+###
+
+### Test invalid project creation (missing required fields)
+POST {{baseUrl}}/project
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Incomplete Project"
+}
+
+###
+
+### Test accessing non-existent user
+GET {{baseUrl}}/user/nonexistentuser
+
+###
+
+### 7. PAGINATION TESTING (if implemented)
+
+### Get projects with pagination
+GET {{baseUrl}}/project?page=1&limit=5
+Authorization: Bearer {{token}}
+
+###
+
+### Get blogs with pagination
+GET {{baseUrl}}/blog?page=1&limit=5
+Authorization: Bearer {{token}}
+
+###
+
+### 8. SEARCH TESTING (if implemented)
+
+### Search projects by technology
+GET {{baseUrl}}/project/search?tech=React
+Authorization: Bearer {{token}}
+
+###
+
+### Search blogs by tag
+GET {{baseUrl}}/blog/search?tag=JavaScript
+Authorization: Bearer {{token}}
+
+###
