@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: masoom007/devlinker-backend:release-1752304572
+          image: masoom007/devlinker-backend:release-1752304726
           ports:
             - containerPort: 5000
           env:
