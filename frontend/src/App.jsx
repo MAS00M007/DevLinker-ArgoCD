@@ -8,6 +8,10 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 
+
+//This is for ArgoCD test
+
+
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   
