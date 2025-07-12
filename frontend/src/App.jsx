@@ -33,6 +33,7 @@ const PublicRoute = ({ children }) => {
     );
   }
   
+  
   return isAuthenticated ? <Navigate to="/dashboard" /> : <>{children}</>;
 };
 
@@ -45,6 +46,8 @@ function App() {
       .then(data => console.log("✅ Frontend received from backend:", data))
       .catch(err => console.error("❌ Frontend can't reach backend:", err));
   }, []);
+
+  
 
   return (
     <AuthProvider>
