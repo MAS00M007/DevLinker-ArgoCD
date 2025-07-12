@@ -36,6 +36,8 @@ const PublicRoute = ({ children }) => {
   return isAuthenticated ? <Navigate to="/dashboard" /> : <>{children}</>;
 };
 
+
+
 function App() {
   useEffect(() => {
     fetch('http://backend:5000/health')
