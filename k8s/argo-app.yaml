@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   source:
     repoURL: https://github.com/MAS00M007/DevLinker-ArgoCD
-    targetRevision: HEAD
+    targetRevision: master
     path: k8s
   project: default
   syncPolicy:
